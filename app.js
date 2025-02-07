@@ -1,9 +1,6 @@
 const express = require("express")
 const mongoose = require("mongoose")
 
-//router
-const postRoute = require("./Routes/post.router")
-
 //env
 require("dotenv").config()
 
@@ -23,8 +20,8 @@ app.use(express.static("static"))
 app.use(fileUpload({}))
 
 //Routes
-app.use("/api/post", postRoute)
-
+app.use("/api/post", require("./Routes/post.router"))
+app.use("/api/auth", require("./Routes/auth.router"))
 //PORT
 const PORT = process.env.PORT
 

@@ -1,11 +1,11 @@
-//postServer
-const postServer = require("../Servers/post.server");
+//postService
+const postService = require("../service/post.service");
 
 
 class PostController {
     async getAll(req, res) {
         try {
-            const allPosts = await postServer.getAll()
+            const allPosts = await postService.getAll()
             res.status(200).json(allPosts)
         } catch (error) {
             res.status(500).json(`getAll error : ${error} `)
@@ -14,7 +14,7 @@ class PostController {
 
     async create(req, res) {
         try {
-            const post = await postServer.create(req.body, req.files.picture)
+            const post = await postService.create(req.body, req.files.picture)
             res.status(200).json(post)
         } catch (error) {
             res.status(500).json(`create Error : ${error}`)
@@ -23,7 +23,7 @@ class PostController {
 
     async delete(req, res) {
         try {
-            const deletePost = await postServer.delete(req.params.id)
+            const deletePost = await postService.delete(req.params.id)
             if (!deletePost) {
                 return res.status(404).json({ message: "Post not found" })
             }
@@ -35,7 +35,7 @@ class PostController {
 
     async edit(req, res) {
         try {
-            const editPost = await postServer.edit(req.body, req.params.id)
+            const editPost = await postService.edit(req.body, req.params.id)
             if (!editPost) {
                 return res.status(404).json({ message: "Post not found" })
             }
@@ -47,7 +47,7 @@ class PostController {
 
     async getOne(req, res) {
         try {
-            const  getOnePost = await postServer.getOne(req.params.id)
+            const  getOnePost = await postService.getOne(req.params.id)
             if(!getOnePost){
                 return res.status(404).json({message:"Post not found "})
             }
