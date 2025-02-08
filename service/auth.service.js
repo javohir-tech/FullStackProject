@@ -1,6 +1,7 @@
 const userDto = require("../dtos/user.dto")
 const userModel = require("../models/user.model")
 const bcrypt = require("bcrypt")
+const tokenService = require("./token.service")
 
 class authService {
     async register(email, password) {
@@ -14,7 +15,12 @@ class authService {
             const user = await userModel.create({ email, password: hashPassword })
 
             const userDtos = new userDto(user)
-            return { userDtos }
+
+            const tokens = tokenService.generateToken({...userDto})
+
+            await tokenService.saveToken(userDto.id, tokens.refreshToken)
+
+            return { user: userDtos, ...tokens}
         } catch (error) {
             console.log(`authService regiter Error : ${error}`)
         }

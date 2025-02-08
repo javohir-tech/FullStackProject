@@ -1,11 +1,10 @@
 const express = require("express")
 const mongoose = require("mongoose")
+const cookieParser =require("cookie-parser")
 
 //env
 require("dotenv").config()
 
-//middlewares
-const requestTime = require("./middlewares/request-time")
 
 //app
 const app = express()
@@ -14,8 +13,8 @@ const app = express()
 const fileUpload = require("express-fileupload")
 
 //middlewares
-app.use(requestTime)
 app.use(express.json())
+app.use(cookieParser({}))
 app.use(express.static("static"))
 app.use(fileUpload({}))
 
