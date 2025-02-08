@@ -16,9 +16,9 @@ class authService {
 
             const userDtos = new userDto(user)
 
-            const tokens = tokenService.generateToken({...userDto})
+            const tokens = tokenService.generateToken({...userDtos})
 
-            await tokenService.saveToken(userDto.id, tokens.refreshToken)
+            await tokenService.saveToken(userDtos.id, tokens.refreshToken)
 
             return { user: userDtos, ...tokens}
         } catch (error) {
