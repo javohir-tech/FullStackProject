@@ -15,7 +15,7 @@ class authController {
         try {
             const userId = req.params.id
             await authService.activation(userId)
-            return res.json({ message: "User activation" })
+            return res.redirect("http://bnp.suvonov-javohir.uz/")
         } catch (error) {
             console.log(`activation error  : ${error}`)
         }

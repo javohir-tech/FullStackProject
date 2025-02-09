@@ -2,6 +2,7 @@ const userDto = require("../dtos/user.dto")
 const userModel = require("../models/user.model")
 const bcrypt = require("bcrypt")
 const tokenService = require("./token.service")
+const mailService = require("./mail.service")
 
 class authService {
     async register(email, password) {
@@ -15,6 +16,9 @@ class authService {
             const user = await userModel.create({ email, password: hashPassword })
 
             const userDtos = new userDto(user)
+
+            //email  servide
+            await mailService.sendMail(email, `${process.env.LOCAL_HOST}/api/auth/activation/${userDtos.id}`)
 
             const tokens = tokenService.generateToken({...userDtos})
 
